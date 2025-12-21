@@ -8,6 +8,6 @@ export default defineConfig({
   // リポジトリ名がURLに含まれる場合は、baseを設定してください
   // 例: base: '/tishii_zikken_app/'
   // カスタムドメインを使用する場合は base: '/' のままにしてください
-  base: '/',
+  base: '/tishii_zikken_app/',
 })
 
