@@ -6,9 +6,13 @@ import ErrorBoundary from './components/ErrorBoundary'
 import './App.css'
 
 function App() {
+  // Github Pages用のbasename設定
+  // 開発環境では空文字列、本番環境では '/tishii_zikken_app'
+  const basename = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL.slice(0, -1)
+  
   return (
     <ErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <div className="App">
           <Routes>
             <Route path="/" element={<TitleScreen />} />
