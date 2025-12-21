@@ -113,3 +113,25 @@
   background-color: #1976D2;
 }
 
+.survey-link-section {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #ddd;
+}
+
+.survey-link-button {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border: 2px solid #FF9800;
+  background-color: white;
+  color: #FF9800;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.survey-link-button:hover {
+  background-color: #FF9800;
+  color: white;
+}
+

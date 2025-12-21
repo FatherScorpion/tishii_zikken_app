@@ -123,9 +123,37 @@ function TaskScreen() {
       // 本番モード：35回で終了
       if (nextIndex >= TOTAL_CELLS) {
         // タスク終了、データをダウンロード
+        const allData = taskData.concat(data)
+        
+        // 統計情報を計算
+        const totalTime = allData.reduce((sum, item) => sum + item['回答にかかった時間'], 0)
+        const averageTime = Math.round(totalTime / allData.length)
+        const correctCount = allData.filter(item => item['正解の指示'] === item['被験者の回答']).length
+        const accuracyRate = Math.round((correctCount / allData.length) * 100 * 100) / 100 // 小数点第2位まで
+        
+        // 各データ行に統計列を追加（値は空）
+        const dataWithStatsColumns = allData.map(item => ({
+          ...item,
+          平均回答時間: '',
+          正答率: ''
+        }))
+        
+        // 統計情報を最後の行として追加
+        const dataWithStats = [
+          ...dataWithStatsColumns,
+          {
+            順番: '',
+            回答にかかった時間: '',
+            正解の指示: '',
+            被験者の回答: '',
+            平均回答時間: averageTime,
+            正答率: `${accuracyRate}%`
+          }
+        ]
+        
         const modeName = mode === 'existing' ? '本番-既存' : '本番-提案'
         const filename = `${modeName}_${userId}_結果.csv`
-        downloadCSV(taskData.concat(data), filename)
+        downloadCSV(dataWithStats, filename)
         
         // アンケート画面に遷移
         setTimeout(() => {
