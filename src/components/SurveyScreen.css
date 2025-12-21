@@ -1,0 +1,152 @@
+.survey-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f5f5f5;
+}
+
+.survey-section {
+  max-width: 800px;
+  width: 100%;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.survey-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.instruction {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.question-item {
+  margin-bottom: 40px;
+}
+
+.question-label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.likert-scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.likert-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.likert-option input[type="radio"] {
+  margin-bottom: 5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.likert-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.likert-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.next-button,
+.back-button {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border: 2px solid #4CAF50;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 20px;
+}
+
+.next-button:hover {
+  background-color: #45a049;
+}
+
+.back-button {
+  background-color: white;
+  color: #4CAF50;
+  margin-right: 10px;
+}
+
+.back-button:hover {
+  background-color: #f0f0f0;
+}
+
+.pairwise-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.pairwise-button {
+  flex: 1;
+  max-width: 300px;
+  padding: 30px 20px;
+  font-size: 1.3rem;
+  border: 3px solid #ddd;
+  background-color: white;
+  color: #333;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pairwise-button:hover {
+  border-color: #4CAF50;
+  background-color: #f9f9f9;
+}
+
+.pairwise-button.selected {
+  border-color: #4CAF50;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.pairwise-vs {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #666;
+}
+
+.pairwise-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+

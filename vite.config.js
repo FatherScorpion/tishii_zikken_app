@@ -5,9 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // Github Pages用のbaseパス設定
-  // リポジトリ名がURLに含まれる場合は、baseを設定してください
-  // 例: base: '/tishii_zikken_app/'
-  // カスタムドメインを使用する場合は base: '/' のままにしてください
-  base: '/tishii_zikken_app/',
+  // 開発環境では '/' を使用し、本番環境では '/tishii_zikken_app/' を使用
+  // 開発時は base: '/' に変更してください
+  base: '/',
 })
 

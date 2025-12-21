@@ -1,25 +1,24 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import TitleScreen from './components/TitleScreen'
+import TaskScreen from './components/TaskScreen'
+import SurveyScreen from './components/SurveyScreen'
+import ErrorBoundary from './components/ErrorBoundary'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>tishii_zikken_app</h1>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            カウント: {count}
-          </button>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<TitleScreen />} />
+            <Route path="/task" element={<TaskScreen />} />
+            <Route path="/survey" element={<SurveyScreen />} />
+          </Routes>
         </div>
-        <p>
-          Github PagesでホストされたReactアプリケーション
-        </p>
-      </header>
-    </div>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }
 
 export default App
-
