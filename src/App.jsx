@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import TitleScreen from './components/TitleScreen'
 import TaskScreen from './components/TaskScreen'
 import SurveyScreen from './components/SurveyScreen'
+import PreExperimentSurveyScreen from './components/PreExperimentSurveyScreen'
 import PostExperimentSurveyScreen from './components/PostExperimentSurveyScreen'
 import ErrorBoundary from './components/ErrorBoundary'
 import './App.css'
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<TitleScreen />} />
             <Route path="/task" element={<TaskScreen />} />
             <Route path="/survey" element={<SurveyScreen />} />
+            <Route path="/pre-experiment-survey" element={<PreExperimentSurveyScreen />} />
             <Route path="/post-experiment-survey" element={<PostExperimentSurveyScreen />} />
           </Routes>
         </div>

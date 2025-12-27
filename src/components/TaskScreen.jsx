@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { generateOrder } from '../utils/randomOrder'
 import { downloadCSV } from '../utils/csvExport'
+import CustomCursor from './CustomCursor'
 import './TaskScreen.css'
 
 const GRID_ROWS = 5
@@ -95,12 +96,16 @@ function TaskScreen() {
     const endTime = Date.now()
     const responseTime = endTime - startTimeRef.current
 
+    // マンハッタン距離（誤差）を計算
+    const error = calculateManhattanDistance(currentTarget, cellNumber)
+
     // データを記録
     const data = {
       順番: currentIndex + 1,
       回答にかかった時間: responseTime,
       正解の指示: currentTarget,
-      被験者の回答: cellNumber
+      被験者の回答: cellNumber,
+      誤差: error
     }
 
     setTaskData(prev => [...prev, data])
@@ -130,12 +135,15 @@ function TaskScreen() {
         const averageTime = Math.round(totalTime / allData.length)
         const correctCount = allData.filter(item => item['正解の指示'] === item['被験者の回答']).length
         const accuracyRate = Math.round((correctCount / allData.length) * 100 * 100) / 100 // 小数点第2位まで
+        const totalError = allData.reduce((sum, item) => sum + item['誤差'], 0)
+        const averageError = Math.round((totalError / allData.length) * 100) / 100 // 小数点第2位まで
         
         // 各データ行に統計列を追加（値は空）
         const dataWithStatsColumns = allData.map(item => ({
           ...item,
           平均回答時間: '',
-          正答率: ''
+          正答率: '',
+          平均誤差: ''
         }))
         
         // 統計情報を最後の行として追加
@@ -146,8 +154,10 @@ function TaskScreen() {
             回答にかかった時間: '',
             正解の指示: '',
             被験者の回答: '',
+            誤差: '',
             平均回答時間: averageTime,
-            正答率: `${accuracyRate}%`
+            正答率: `${accuracyRate}%`,
+            平均誤差: averageError
           }
         ]
         
@@ -185,14 +195,34 @@ function TaskScreen() {
     return row * GRID_COLS + col + 1
   }
 
+  // セル番号から行と列の位置を取得
+  const getCellPosition = (cellNumber) => {
+    const zeroBased = cellNumber - 1
+    return {
+      row: Math.floor(zeroBased / GRID_COLS),
+      col: zeroBased % GRID_COLS
+    }
+  }
+
+  // マンハッタン距離を計算
+  const calculateManhattanDistance = (cell1, cell2) => {
+    const pos1 = getCellPosition(cell1)
+    const pos2 = getCellPosition(cell2)
+    return Math.abs(pos1.row - pos2.row) + Math.abs(pos1.col - pos2.col)
+  }
+
   const getCellColor = (cellNumber) => {
     if (currentTarget === cellNumber) {
       return '#ff0000' // 赤：現在の指示
     }
     if (countdown !== null && nextTarget === cellNumber) {
-      return '#ff9999' // 薄い赤：次の指示（カウントダウン中）
+      return '#ff0000' // 赤：次の指示（カウントダウン中）- 同じ演出にする
     }
     return '#000000' // 黒：通常
+  }
+
+  const isTargetCell = (cellNumber) => {
+    return currentTarget === cellNumber || (countdown !== null && nextTarget === cellNumber)
   }
 
   if (!order.length) {
@@ -201,6 +231,7 @@ function TaskScreen() {
 
   return (
     <div className="task-screen">
+      <CustomCursor />
       {isPractice && (
         <button className="end-button" onClick={handleEndPractice}>
           終了
@@ -222,7 +253,7 @@ function TaskScreen() {
                 return (
                   <div
                     key={col}
-                    className="grid-cell"
+                    className={`grid-cell ${isTargetCell(cellNumber) ? 'target-cell' : ''}`}
                     onClick={() => handleCellClick(cellNumber)}
                     style={{ color: getCellColor(cellNumber) }}
                   >

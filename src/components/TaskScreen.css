@@ -76,6 +76,21 @@
   background-color: #f9f9f9;
 }
 
+.grid-cell.target-cell {
+  border: 8px solid #ff0000;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+  }
+}
+
 .cell-number {
   position: absolute;
   top: 5px;

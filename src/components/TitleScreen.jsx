@@ -113,6 +113,12 @@ function TitleScreen() {
       <div className="survey-link-section">
         <button 
           className="survey-link-button"
+          onClick={() => navigate('/pre-experiment-survey')}
+        >
+          実験前アンケート
+        </button>
+        <button 
+          className="survey-link-button"
           onClick={() => navigate('/post-experiment-survey')}
         >
           実験終了後アンケート

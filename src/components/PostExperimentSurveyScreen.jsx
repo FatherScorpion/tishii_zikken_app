@@ -6,7 +6,7 @@ import './PostExperimentSurveyScreen.css'
 const SURVEY_ITEMS = [
   { key: '対象の分かりやすさ', label: '対象の分かりやすさ：指示された対象がどれであるか，直感的に理解できたか' },
   { key: '回答への確信度', label: '回答への確信度：自分の回答が合っているとどの程度自信を持てたか' },
-  { key: '視認性', label: '視認性：指差し（手）またはARピンが，背景や距離に関わらず見やすかったか' }
+  { key: '視認性', label: '視認性：指差し（手）またはARピン，および壁などの周辺環境が，背景や距離に関わらず見やすかったか' }
 ]
 
 function PostExperimentSurveyScreen() {
