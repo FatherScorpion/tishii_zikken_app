@@ -5,13 +5,23 @@ import './SurveyScreen.css'
 
 // NASA-TLXの6つのサブスケール
 const NASA_TLX_FACTORS = [
-  '精神的負荷',
-  '身体的負荷',
-  '時間的切迫感',
-  'パフォーマンス',
+  '知的・知覚的要求',
+  '身体的要求',
+  'タイムプレッシャー',
+  '作業成績',
   '努力',
   'フラストレーション'
 ]
+
+// NASA-TLX各次元の尺度の意味
+const NASA_TLX_SCALE_LABELS = {
+  '知的・知覚的要求': { low: '低い', high: '高い' },
+  '身体的要求': { low: '低い', high: '高い' },
+  'タイムプレッシャー': { low: '低い', high: '高い' },
+  '作業成績': { low: '良い', high: '悪い' },
+  '努力': { low: '低い', high: '高い' },
+  'フラストレーション': { low: '低い', high: '高い' }
+}
 
 // 一対比較の組み合わせ（15ペア）
 const PAIRWISE_COMBINATIONS = [
@@ -34,10 +44,10 @@ function SurveyScreen() {
   })
 
   const [nasaTlxRatings, setNasaTlxRatings] = useState({
-    精神的負荷: null,
-    身体的負荷: null,
-    時間的切迫感: null,
-    パフォーマンス: null,
+    '知的・知覚的要求': null,
+    '身体的要求': null,
+    'タイムプレッシャー': null,
+    '作業成績': null,
     努力: null,
     フラストレーション: null
   })
@@ -127,10 +137,10 @@ function SurveyScreen() {
     const surveyData = {
       ...likertAnswers,
       ...nasaTlxRatings,
-      '精神的負荷_重み': weights[0],
-      '身体的負荷_重み': weights[1],
-      '時間的切迫感_重み': weights[2],
-      'パフォーマンス_重み': weights[3],
+      '知的・知覚的要求_重み': weights[0],
+      '身体的要求_重み': weights[1],
+      'タイムプレッシャー_重み': weights[2],
+      '作業成績_重み': weights[3],
       '努力_重み': weights[4],
       'フラストレーション_重み': weights[5]
     }
@@ -195,25 +205,32 @@ function SurveyScreen() {
         <h2>NASA-TLX評価（7段階評価）</h2>
         <p className="instruction">各項目について、1から7まで選択してください。</p>
         
-        {NASA_TLX_FACTORS.map(factor => (
-          <div key={factor} className="question-item">
-            <p className="question-label">{factor}</p>
-            <div className="likert-scale">
-              {[1, 2, 3, 4, 5, 6, 7].map(value => (
-                <label key={value} className="likert-option">
-                  <input
-                    type="radio"
-                    name={`nasa-${factor}`}
-                    value={value}
-                    checked={nasaTlxRatings[factor] === value}
-                    onChange={(e) => handleNasaTlxRatingChange(factor, e.target.value)}
-                  />
-                  <span className="likert-value">{value}</span>
-                </label>
-              ))}
+        {NASA_TLX_FACTORS.map(factor => {
+          const scaleLabels = NASA_TLX_SCALE_LABELS[factor]
+          return (
+            <div key={factor} className="question-item">
+              <p className="question-label">{factor}</p>
+              <div className="likert-scale">
+                {[1, 2, 3, 4, 5, 6, 7].map(value => (
+                  <label key={value} className="likert-option">
+                    <input
+                      type="radio"
+                      name={`nasa-${factor}`}
+                      value={value}
+                      checked={nasaTlxRatings[factor] === value}
+                      onChange={(e) => handleNasaTlxRatingChange(factor, e.target.value)}
+                    />
+                    <span className="likert-value">{value}</span>
+                  </label>
+                ))}
+              </div>
+              <div className="likert-labels">
+                <span>{scaleLabels.low}</span>
+                <span>{scaleLabels.high}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
 
         <button className="next-button" onClick={handleNextSection}>
           次へ（NASA-TLX重みづけ）
